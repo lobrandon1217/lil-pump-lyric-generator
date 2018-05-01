@@ -34,7 +34,7 @@ public class LyricGenerator {
             //BEGINNING
             if(i==0) {
                 ArrayList<String> beginArray = wordTable.get("--begin");
-                beginArray.add(words[i].replaceAll("[^a-zA-Z\\n ]", "").toLowerCase());
+                beginArray.add(words[i]);
             } else if(i==words.length-1){
                 //END
                 // I don't think this matters
@@ -42,20 +42,20 @@ public class LyricGenerator {
                 //So that you will never have to get the last word
             }
             //ALL OTHERS
-            if( wordTable.get(words[i].replaceAll("[^a-zA-Z\\n ]", "").toLowerCase()) == null ) {
+            if( wordTable.get(words[i]) == null ) {
                 //Word doesn't exist yet
                 ArrayList<String> newWordList = new ArrayList<String>();
                 newWordList.add(words[i+1]);
-                wordTable.put(words[i].replaceAll("[^a-zA-Z\\n ]", "").toLowerCase(), newWordList);
+                wordTable.put(words[i], newWordList);
             } else {
                 //Word does exist
-                ArrayList<String> currentWordList = wordTable.get(words[i].replaceAll("[^a-zA-Z\\n ]", "").toLowerCase());
+                ArrayList<String> currentWordList = wordTable.get(words[i]);
                 currentWordList.add(words[i+1]);
             }
         }
     }
     
-    public String createLyrics() {
+    public String createLyrics(int wordLength) {
         //Initialize the new song
         ArrayList<String> newSong = new ArrayList<String>();
         
@@ -64,21 +64,35 @@ public class LyricGenerator {
         String newWord = beginningList.get(rng.nextInt(beginningList.size()));
         newSong.add(newWord);
         
-        //Loop 100 times as a test
-        for(int i=0;i<300;i++){
+        //Loop slider amount of times
+        for(int i=0;i<wordLength;i++){
             //Get the arraylist from the newest word
-            ArrayList<String> newestWordList = wordTable.get(newWord.replaceAll("[^a-zA-Z\\n ]", "").toLowerCase());
-            //Get a random word from it
-            String newWord2;
-            try{
-                newWord2 = newestWordList.get(rng.nextInt(newestWordList.size()));
-                //Add it to the new song
-                newSong.add(newWord2);
-                newWord = newWord2.toString().replaceAll("[^a-zA-Z\\n ]", "").toLowerCase();
-            }catch(Exception e){
-                System.out.println(e.toString());
-                System.out.println(String.format("Trying to get from %s failed!", newWord.replaceAll("[^a-zA-Z\\n ]", "").toLowerCase()));
+            ArrayList<String> newestWordList = wordTable.get(newWord);
+            //Debug purposes
+            if( newestWordList == null ) {
+                //System.out.println(newWord);
             }
+            //Check the arraylist for null or empty, more likely the latter
+            if(newestWordList == null || newestWordList.size() == 0){
+                System.out.println(newWord);
+                //Get all keys
+                Set<String> keys = wordTable.keySet();
+                //Convert keys to String[]
+                String[] keyArray = keys.toArray(new String[keys.size()]);
+                //Get random key
+                String randKey = keyArray[rng.nextInt(keyArray.length)];;
+                while( randKey == "--begin" || randKey == "--ending" ) {
+                    randKey = keyArray[rng.nextInt(keyArray.length)];;
+                }
+                //Add it to the song
+                newSong.add(randKey);
+                System.out.println(String.format("Replaced '%s' with new word '%s'", newWord, randKey));
+                continue;
+            }
+            //Get a random word from it
+            newWord = newestWordList.get(rng.nextInt(newestWordList.size()));
+            //Add it to the new song
+            newSong.add(newWord);
         }
         //Return it all together
         return String.join(" ", newSong);

@@ -9,6 +9,7 @@ package lyricgen;
  * Import Java's SQL and other stuff we need for this
  */
 import java.sql.*;
+import java.util.*;
 
 /**
  *
@@ -19,7 +20,6 @@ public class MySQLHandler {
      * Fields
      */
     private Connection sqlConnection;
-    private Statement sqlStatement;
     
     /**
      * Constructor
@@ -31,7 +31,6 @@ public class MySQLHandler {
      */
     public MySQLHandler() throws SQLException {
         sqlConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/lyricgen","root",""); //Initialize the SQL Connection
-        sqlStatement = sqlConnection.createStatement(); //Create the statement for use with sql
         System.out.println("Successfully connected to the database.");
     }
     
@@ -46,6 +45,7 @@ public class MySQLHandler {
      * @throws SQLException 
      */
     public ResultSet executeQuery(String query) throws SQLException {
+        Statement sqlStatement = sqlConnection.createStatement();
         return sqlStatement.executeQuery(query);
     }
     
@@ -58,6 +58,31 @@ public class MySQLHandler {
      * @throws SQLException 
      */
     public void execute(String query) throws SQLException {
+        Statement sqlStatement = sqlConnection.createStatement();
         sqlStatement.execute(query);
+    }
+    
+    /**
+     * Gets the user data from an id.
+     * 
+     * @param id
+     * @return HashMap of the SQL users table with only 1 row
+     * @throws SQLException 
+     */
+    public HashMap getUserFromId( int id ) throws SQLException {
+        //Create a new statement for this
+        Statement tempStatement = sqlConnection.createStatement();
+        //Get the results
+        ResultSet nameResult = tempStatement.executeQuery(String.format("SELECT * FROM users WHERE id = %s;", id));
+        //Create a HashMap
+        HashMap result = new HashMap();
+        while( nameResult.next() ) {
+            result.put("id", nameResult.getInt("id"));
+            result.put("username", nameResult.getString("username"));
+            result.put("password", nameResult.getString("password"));
+            result.put("is_admin", nameResult.getString("is_admin"));
+            break; //make sure it's one only
+        }
+        return result;
     }
 }
