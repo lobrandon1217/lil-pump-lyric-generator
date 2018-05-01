@@ -1,3 +1,4 @@
+
 # Lyric Pump
 
 ### What?
@@ -12,15 +13,18 @@ Steps to a finished product
 - [ ] More options for song generation
 	- [ ] Allow randomness?
 	- [ ] User-defined probability weight?
-	- [ ] Polish Markov Chain
+	- [ ] Polish Markov Chain (remove major bugs)
 - [ ] Social media aspect with MySQL
+	- [ ] UI for login, register
 	- [ ] Hashing, salting password
 	- [ ] Song publishing (generated songs)
 	- [ ] Song submitting (submitting pre-existing lyrics)
+		- [ ] Clear words inside [square brackets]
 	- [ ] Song ratings (like, dislike)
 	- [ ] Song comments
 - [ ] Admin control
     - [ ] Delete songs
+    - [ ] Delete comments
     - [ ] Ban users
 - [ ] Add remote IP access for SQL server
 - [ ] Polish the UI
