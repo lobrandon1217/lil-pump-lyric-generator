@@ -20,5 +20,8 @@ Steps to a finished product
 	- [ ] Song ratings (like, dislike)
 	- [ ] Song comments
 - [ ] Admin control
+    - [ ] Delete songs
+    - [ ] Ban users
+- [ ] Add remote IP access for SQL server
 - [ ] Polish the UI
 - [ ] Make demonstration video for project
