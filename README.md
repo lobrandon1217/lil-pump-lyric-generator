@@ -29,3 +29,4 @@ Steps to a finished product
 - [ ] Add remote IP access for SQL server
 - [ ] Polish the UI
 - [ ] Make demonstration video for project
+- [ ] Make a website for it if we have time
