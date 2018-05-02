@@ -32,7 +32,7 @@ If you can, please mark and leave your initials in bold to the right of the task
 	- [ ] *Hashing, salting password - **NF***
 	- [ ] Song publishing (generated songs)
 	- [ ] Song submitting (submitting pre-existing lyrics)
-		- [ ] Clear words inside [square brackets]
+		- [ ] *Clear words inside [square brackets] - **BL***
 	- [ ] Song ratings (like, dislike)
 	- [ ] Song comments
 - [ ] Admin control
