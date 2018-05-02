@@ -15,8 +15,8 @@ Steps to a finished product
 	- [ ] User-defined probability weight?
 	- [ ] Polish Markov Chain (remove major bugs)
 - [ ] Social media aspect with MySQL
-	- [ ] UI for login, register
-	- [ ] Hashing, salting password
+	- [ ] UI for login, register #NF
+	- [ ] Hashing, salting password #NF
 	- [ ] Song publishing (generated songs)
 	- [ ] Song submitting (submitting pre-existing lyrics)
 		- [ ] Clear words inside [square brackets]
