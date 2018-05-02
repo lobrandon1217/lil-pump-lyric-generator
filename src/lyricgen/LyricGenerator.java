@@ -27,12 +27,16 @@ public class LyricGenerator {
     }
     
     public void insertString(String songLyric) {
+        //Remove text inside square brackets because they are wrong usually when generated
+        String songLyricReplaced = songLyric.trim().replaceAll("\\[(.*)]", "").replaceAll(" +", " ");
+        
         //Split the song into individual words
-        String[] words = songLyric.split(" ");
+        String[] words = songLyricReplaced.split(" ");
         //Loop through each word and add it to the specific hashtable location
         for(int i=0;i<words.length;i++) {
             //BEGINNING
-            if(i==0) {
+            //Or the first letter is capitalized and not at the end
+            if(i==0 || (Character.isUpperCase(words[i].charAt(0)) && i != words.length-1)) {
                 ArrayList<String> beginArray = wordTable.get("--begin");
                 beginArray.add(words[i]);
             } else if(i==words.length-1){

@@ -1,0 +1,2 @@
+lyricgen.CustomBCrypt
+lyricgen.BCryptInitializer
