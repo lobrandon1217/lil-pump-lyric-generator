@@ -24,6 +24,8 @@ If you can, please mark and leave your initials in bold to the right of the task
 #### Tasks
 
 - [ ] More options for song generation
+	- [ ] Generate correct verse splits with square brackets
+	- [ ] Create UI to display song with publish, close, regenerate, etc. options
 	- [ ] Allow randomness?
 	- [ ] User-defined probability weight?
 	- [ ] Polish Markov Chain (remove major bugs)
@@ -32,7 +34,7 @@ If you can, please mark and leave your initials in bold to the right of the task
 	- [ ] *Hashing, salting password - **NF***
 	- [ ] Song publishing (generated songs)
 	- [ ] Song submitting (submitting pre-existing lyrics)
-		- [ ] *Clear words inside [square brackets] - **BL***
+		- [x] ~~Clear words inside [square brackets] - **BL**~~
 	- [ ] Song ratings (like, dislike)
 	- [ ] Song comments
 - [ ] Admin control
