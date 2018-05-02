@@ -28,7 +28,7 @@ public class LyricGenerator {
     
     public void insertString(String songLyric) {
         //Remove text inside square brackets because they are wrong usually when generated
-        String songLyricReplaced = songLyric.replaceAll("\\[(.*)]", "");
+        String songLyricReplaced = songLyric.trim().replaceAll("\\[(.*)]", "").replaceAll(" +", " ");
         
         //Split the song into individual words
         String[] words = songLyricReplaced.split(" ");
