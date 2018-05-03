@@ -30,7 +30,7 @@ public class MySQLHandler {
      * @throws SQLException 
      */
     public MySQLHandler() throws SQLException {
-        sqlConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/lyricgen","root",""); //Initialize the SQL Connection
+        sqlConnection = DriverManager.getConnection("jdbc:mysql://den1.mysql2.gear.host:3306/lyricgen","lyricgen","Ig83!_5JWCV6"); //Initialize the SQL Connection
         System.out.println("Successfully connected to the database.");
     }
     
