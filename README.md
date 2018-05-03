@@ -28,14 +28,14 @@ e.g. `- [x] Finished Task - **JD**`
 - [x] Find public hosting for SQL server - **BL**
 - [ ] Demonstration video
 - [ ] Flowchart
-- [ ] Final ER diagram
+- [ ] Final ER diagram - **BL**
 - [ ] Technical Writeup
-### User Interface
-- [ ] Design new interface with sectioned panels
+### User Interface (and submenus)
+- [ ] Design new interface with sectioned panels - **BL**
 - [ ] Login and Register UI
 - [ ] Profile Page UI
 - [ ] Add Songs UI
-- [ ] Generation UI
+- [ ] Generation UI - **BL**
 - [ ] Community UI
 - [ ] Admin UI
 ### Song Generation
