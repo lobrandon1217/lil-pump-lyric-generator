@@ -24,10 +24,10 @@ If you can, please mark and leave your initials in bold to the right of the task
 #### Tasks
 
 - [ ] More options for song generation
-	- [ ] Generate correct verse splits with square brackets **WW**
+	- [ ] *Generate correct verse splits with square brackets - **WW***
 	- [ ] Create UI to display song with publish, close, regenerate, etc. options
-	- [ ] Allow randomness? **wW**
-	- [ ] User-defined probability weight? **WW**
+	- [ ] *Allow randomness? - **WW***
+	- [ ] *User-defined probability weight? - **WW***
 	- [ ] Polish Markov Chain (remove major bugs)
 - [ ] Social media aspect with MySQL
 	- [ ] *UI for login, register - **NF***
