@@ -41,7 +41,15 @@ If you can, please mark and leave your initials in bold to the right of the task
     - [ ] Delete songs
     - [ ] Delete comments
     - [ ] Ban users
-- [ ] Add remote IP access for SQL server
-- [ ] Polish the UI
-- [ ] Make demonstration video for project
-- [ ] Make a website for it if we have time
+- [ ] Markov Chain/Output refinements
+	- [ ] Split specified punctuation into individual words
+	- [ ] Clean up straggling punctuation marks
+- [ ] External tasks.
+	- [ ] ER diagram
+	- [ ] Flowchart
+	- [ ] Documentation?
+	- [ ] Make demonstration video for project
+	- [ ] Make a website for it if we have time
+- [ ] Miscellaneous
+	- [ ] Add remote IP access for SQL server
+	- [ ] Polish the UI
