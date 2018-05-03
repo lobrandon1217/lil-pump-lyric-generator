@@ -1,4 +1,5 @@
 
+
 # Lyric Pump
 
 ### What?
@@ -10,16 +11,30 @@ Whitman Wilson, Noah Forest, Brandon Lo
 
 ### To-Do List
 Steps to a finished product
+
+#### Key
+|Type Text|Meaning|
+|--|--|
+|Default Text|Free to take, not being developed|
+|*Italics*|In progress|
+|~~Strikethrough~~|Finished|
+
+If you can, please mark and leave your initials in bold to the right of the task using the key above.
+
+#### Tasks
+
 - [ ] More options for song generation
-	- [ ] Allow randomness?
-	- [ ] User-defined probability weight?
+	- [ ] *Generate correct verse splits with square brackets - **WW***
+	- [ ] Create UI to display song with publish, close, regenerate, etc. options
+	- [ ] *Allow randomness? - **WW***
+	- [ ] *User-defined probability weight? - **WW***
 	- [ ] Polish Markov Chain (remove major bugs)
 - [ ] Social media aspect with MySQL
-	- [ ] UI for login, register #NF
-	- [ ] Hashing, salting password #NF
+	- [ ] *UI for login, register - **NF***
+	- [ ] *Hashing, salting password - **NF***
 	- [ ] Song publishing (generated songs)
 	- [ ] Song submitting (submitting pre-existing lyrics)
-		- [ ] Clear words inside [square brackets]
+		- [x] ~~Clear words inside [square brackets] - **BL**~~
 	- [ ] Song ratings (like, dislike)
 	- [ ] Song comments
 - [ ] Admin control
