@@ -19,7 +19,7 @@ public class MySQLHandler {
     /**
      * Fields
      */
-    private Connection sqlConnection;
+    private static Connection sqlConnection;
     
     /**
      * Constructor
@@ -57,7 +57,7 @@ public class MySQLHandler {
      * @param query what you want to execute
      * @throws SQLException 
      */
-    public void execute(String query) throws SQLException {
+    public static void execute(String query) throws SQLException {
         Statement sqlStatement = sqlConnection.createStatement();
         sqlStatement.execute(query);
     }

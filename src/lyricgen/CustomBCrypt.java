@@ -7,8 +7,8 @@ package lyricgen;
  */
 
 import java.io.UnsupportedEncodingException;
-
 import java.security.SecureRandom;
+import java.util.function.Function;
             
 public class CustomBCrypt {
     //BCrypt initial variables
@@ -676,5 +676,98 @@ public class CustomBCrypt {
 //continue here
 
 class BCryptInitializer {
+    private final int logRounds;
+    
+    public BCryptInitializer(int logRounds){
+        this.logRounds = logRounds;
+    }
+    
+    public String hash(String password){
+        return CustomBCrypt.hashpw(password, CustomBCrypt.gensalt(logRounds));
+    }
+    
+    public boolean verifyHash(String password, String hash){
+        return CustomBCrypt.checkpw(password, hash);
+    }
+    
+    public boolean verifyAndUpdateHash(String password, String hash, Function<String, Boolean> updateFunc){
+        if(CustomBCrypt.checkpw(password, hash)){
+            int rounds = getRounds(hash);
+            if(rounds != logRounds){
+                String newHash = hash(password);
+                return updateFunc.apply(newHash);
+            }
+            return true;
+        }
+        return false;
+    }
+    
+    private int getRounds(String salt){
+        char minor = (char)0;
+        int off = 0;
+        
+        if(salt.charAt(0) != '$' || salt.charAt(1) != '2'){
+            throw new IllegalArgumentException("Invalid salt version");
+        }
+        
+        if(salt.charAt(2) == '$'){
+            off = 3;
+        } else {
+            minor = salt.charAt(2);
+            if(minor != 'a' || salt.charAt(3) != '$'){
+                throw new IllegalArgumentException ("Invalid salt revision");
+            }
+            off = 4;
+        }
+        if(salt.charAt(off + 2) > '$')
+            throw new IllegalArgumentException ("Missing salt rounds");
+        return Integer.parseInt(salt.substring(off, off + 2));
+    }
+}
 
+
+class Password {
+    private static int workload = 12;
+    
+    public static String hashPassword(String password_plaintext){
+        String salt = CustomBCrypt.gensalt(workload);
+        String hashed_password = CustomBCrypt.hashpw(password_plaintext, salt);
+        return(hashed_password);
+    }
+    
+    public static boolean checkPassword(String password_plaintext, String stored_hash){
+        boolean password_verified  = false;
+        
+        if(null == stored_hash || !stored_hash.startsWith("$2a$"))
+            throw new IllegalArgumentException ("Invalid hash provided for comparison");
+        
+        password_verified = CustomBCrypt.checkpw(password_plaintext, stored_hash);
+        
+        return (password_verified);
+    }
+    
+    public static void main(String[] args){
+        String test_passwd = "asdasldkjhasdl";
+        String test_hash = "$2a$06$.rCVZVOThsIa97pEDOxvGuRRgzG64bvtJ0938xuqzv18d3ZpQhstC";
+        
+        System.out.println("Testing BCrypt Password hashing and verification");
+        System.out.println("Test password: " + test_passwd);
+        System.out.println("Test stored hash: " + test_hash);
+        System.out.println("Hashing test password...");
+        System.out.println();
+
+        String computed_hash = hashPassword(test_passwd);
+        System.out.println("Test computed hash: " + computed_hash);
+        System.out.println();
+        System.out.println("Verifying that hash and stored hash both match for the test password...");
+        System.out.println();
+
+        String compare_test = checkPassword(test_passwd, test_hash)
+                ? "Passwords Match" : "Passwords do not match";
+        String compare_computed = checkPassword(test_passwd, computed_hash)
+                ? "Passwords Match" : "Passwords do not match";
+
+        System.out.println("Verify against stored hash:   " + compare_test);
+        System.out.println("Verify against computed hash: " + compare_computed);
+    }
 }
