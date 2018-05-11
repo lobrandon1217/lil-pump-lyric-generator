@@ -5,6 +5,9 @@
  */
 package lyricgen;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+
 /**
  *
  * @author brandonlo
@@ -44,8 +47,18 @@ public class MainTabSelection extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Lyric Pump");
         setResizable(false);
+        setSize(new java.awt.Dimension(816, 500));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                jFrameWindowOpened(evt);
+            }
+        });
 
-        logoPanel.setBackground(new java.awt.Color(255, 204, 51));
+        logoPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                topButtonMousePressed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -62,10 +75,13 @@ public class MainTabSelection extends javax.swing.JFrame {
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
         );
 
-        communityButton.setBackground(new java.awt.Color(255, 204, 51));
+        communityButton.setBackground(new java.awt.Color(185, 207, 212));
         communityButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         communityButton.setName("community"); // NOI18N
         communityButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                topButtonMousePressed(evt);
+            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 changePanel(evt);
             }
@@ -85,9 +101,12 @@ public class MainTabSelection extends javax.swing.JFrame {
             .addComponent(communityLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
         );
 
-        addSongButton.setBackground(new java.awt.Color(255, 204, 51));
+        addSongButton.setBackground(new java.awt.Color(185, 207, 212));
         addSongButton.setName("addSong"); // NOI18N
         addSongButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                topButtonMousePressed(evt);
+            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 addSongButtonMouseReleased(evt);
                 changePanel(evt);
@@ -108,9 +127,12 @@ public class MainTabSelection extends javax.swing.JFrame {
             .addComponent(addSongLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
         );
 
-        generationButton.setBackground(new java.awt.Color(255, 204, 51));
+        generationButton.setBackground(new java.awt.Color(185, 207, 212));
         generationButton.setName("generation"); // NOI18N
         generationButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                topButtonMousePressed(evt);
+            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 changePanel(evt);
             }
@@ -130,9 +152,12 @@ public class MainTabSelection extends javax.swing.JFrame {
             .addComponent(generateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
         );
 
-        profileButton.setBackground(new java.awt.Color(255, 204, 51));
+        profileButton.setBackground(new java.awt.Color(185, 207, 212));
         profileButton.setName("profile"); // NOI18N
         profileButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                topButtonMousePressed(evt);
+            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 changePanel(evt);
             }
@@ -186,7 +211,6 @@ public class MainTabSelection extends javax.swing.JFrame {
         );
 
         contentPanel.setPreferredSize(new java.awt.Dimension(800, 400));
-        contentPanel.setSize(new java.awt.Dimension(800, 400));
 
         javax.swing.GroupLayout contentPanelLayout = new javax.swing.GroupLayout(contentPanel);
         contentPanel.setLayout(contentPanelLayout);
@@ -196,7 +220,7 @@ public class MainTabSelection extends javax.swing.JFrame {
         );
         contentPanelLayout.setVerticalGroup(
             contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 439, Short.MAX_VALUE)
+            .addGap(0, 447, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -204,26 +228,62 @@ public class MainTabSelection extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(topPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 812, Short.MAX_VALUE)
+            .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(contentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * Changes the panel depending on what button you click at the top
+     * @param evt 
+     */
     private void changePanel(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_changePanel
-        System.out.println(evt.getComponent().getName());
+        /*
+        community
+        addSong
+        generation
+        profile
+        */
+        //set all other buttons back
+        communityButton.setBackground(Color.decode("#AFAAB9"));
+        generationButton.setBackground(Color.decode("#AFAAB9"));
+        addSongButton.setBackground(Color.decode("#AFAAB9"));
+        profileButton.setBackground(Color.decode("#AFAAB9"));
+        //set this buitton to dark
+        evt.getComponent().setBackground(Color.decode("#B9CFD4"));
+        //clear the panel
+        contentPanel.removeAll();
+        //add the panel depending on what you have
+        contentPanel.add(new generatePanel());
+        //refresh the panel
+        contentPanel.validate();
     }//GEN-LAST:event_changePanel
 
     private void addSongButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addSongButtonMouseReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_addSongButtonMouseReleased
+
+    private void jFrameWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jFrameWindowOpened
+        //Set the content panel to have borderlayout so that it fills the entire jPanel
+        contentPanel.setLayout(new BorderLayout());
+    }//GEN-LAST:event_jFrameWindowOpened
+    
+    /**
+     * Function for just changing the color to the darker "pressed" color
+     * @param evt 
+     */
+    private void topButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topButtonMousePressed
+        //Change the color to darker
+        //evt.getComponent().setBackground(Color.decode("#B48291"));
+    }//GEN-LAST:event_topButtonMousePressed
 
     /**
      * @param args the command line arguments
