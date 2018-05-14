@@ -85,7 +85,6 @@ public class generatePanel extends javax.swing.JPanel {
         jScrollPane1.setBackground(new java.awt.Color(185, 207, 212));
         jScrollPane1.setBorder(null);
 
-        jTable1.setAutoCreateRowSorter(true);
         jTable1.setBackground(new java.awt.Color(185, 207, 212));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -183,12 +182,11 @@ public class generatePanel extends javax.swing.JPanel {
                      * 4 : submitted by (name)
                      */
                     int id = Integer.valueOf((String) jTableModel.getValueAt(i, 0));
-                    String lyrics = (String) jTableModel.getValueAt(i, 1);
                     //get song lyrics from mysql
                     ResultSet songLyrics = sqlHandler.executeQuery(String.format("SELECT lyrics FROM songs WHERE id = %s;", id));
                     while(songLyrics.next()){
                         //Feed the lyrics into the songLyrics object
-                        songFactory.insertString(lyrics);
+                        songFactory.insertString(songLyrics.getString("lyrics"));
                     }
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Getting song lyrics failed", "Error", JOptionPane.ERROR_MESSAGE);
