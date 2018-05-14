@@ -1,0 +1,6 @@
+
+logo: /assets/img/logo.png
+description: A Markov-based lyric generator
+show_downloads: true
+google_analytics:
+theme: jekyll-theme-minimal
