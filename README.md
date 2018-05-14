@@ -46,7 +46,7 @@ e.g. `- [x] Finished Task - **JD**`
 - [ ] *User-defined probability weight? - **WW***
 - [ ] Polish Markov Chain (remove major bugs)
 - [ ] Split specified punctuation into individual words
-- [ ] Clean up straggling punctuation marks
+- [X] Clean up straggling punctuation marks **WW** *could use polishing
 ### Social
 - [ ] *UI for login, register - **NF***
 - [ ] *Hashing, salting password - **NF***
