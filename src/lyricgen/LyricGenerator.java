@@ -4,6 +4,8 @@
 package lyricgen;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -99,6 +101,84 @@ public class LyricGenerator {
             newSong.add(newWord);
         }
         //Return it all together
-        return String.join(" ", newSong);
+        return punctuationCleanUp(String.join(" ", newSong));
+    }
+    /**
+     * @author WhitmanWilson
+     * Does a number of string operations to attempt to correct punctuation to be in in-line with standard English. WIP.
+     * @param song Cannot contain '|' Char
+     * @return  song, cleaned
+     */
+protected static String punctuationCleanUp(String song){
+        Pattern pattern;
+        Matcher matcher;
+        int start;
+        int end;
+        String match;
+        /* 
+        Yes, ive probably overcomplicated this.
+        parenthese and quote fixer. finds problems with regex, and
+        replaces them with 'tags' of the same length which are later replaced corrected string.
+        This is to avoid indexing errors that result from adding coprrections(whitch change the size of the song) durring matching.
+        */
+        String pat = "(\\([A-Za-z0-9_!?'\"`.,]+)|([A-Za-z0-9_!?'\"`.,]+\\))|(\"[A-Za-z0-9_!?'\"`.,]+)|[A-Za-z0-9_!?'\"`.,]+\"";// looks for ...) , (... , ..." , and "...
+        pattern = Pattern.compile(pat);
+        matcher = pattern.matcher(song);
+        ArrayList<String> corrections = new ArrayList<String>();
+        while(matcher.find()){
+                start = matcher.start();
+                end = matcher.end();
+                match = song.substring(start,end);
+                if(song.charAt(end) == ')' ) { // if match has a closing paren
+                    //System.out.println("(() match: " +match);
+                    corrections.add("("+match.replace("(",""));
+                    song = song.substring(0,start) +createReplaceTag(match)+ song.substring(end);
+                }else if( song.charAt(start-1) == '('){ 
+                    //System.out.println("()) match: " +match);
+                    corrections.add(match);
+                    song = song.substring(0,start) +createReplaceTag(match)+ song.substring(end);
+                }else if( song.charAt(start) == '('){
+                    //System.out.println("((( match: " +match);
+                    corrections.add(match+")");
+                    song = song.substring(0,start) +createReplaceTag(match)+ song.substring(end);
+                }else if( song.charAt(end-1) == ')'){
+                    //System.out.println("))) match: " +match);
+                    corrections.add("("+match);
+                    song = song.substring(0,start) +createReplaceTag(match)+ song.substring(end);
+                }else if(song.charAt(start) == '"' && song.charAt(end-1) == '"'){
+                     System.out.println("\"-\" match: " +match);
+                }else if( song.charAt(start) == '"'){
+                    //System.out.println("\"-> match: " +match);
+                    corrections.add(match+'"');
+                    song = song.substring(0,start) +createReplaceTag(match)+ song.substring(end);
+                }else if( song.charAt(end-1) == '"'){
+                    //System.out.println("<-\" match: " +match);
+                    corrections.add(" \""+match);
+                    song = song.substring(0,start) +createReplaceTag(match)+ song.substring(end);
+                }else System.out.println("??? match: " +match);
+        }
+        for(String correction :corrections){ //replace tags with thier corrected matches.
+            song = song.replaceFirst("\\|+", correction);
+        }
+        song = song.replace("\" \"", " "); // join akward consecutive quotations
+        song = song.replace(") ("," ");// join akward consecutive parenthesis
+        song = song.replace(",)", ")");// clear ,) resulting from ( closing.
+        if(song.charAt(song.length()-1) == ','){
+            song = song.substring(0,song.length()-1);
+        }
+        return song;
+    }
+    /**
+     * @author WhitmanWilson
+     * create same string of '|'s, that is the same length as the match, to be replaced becasue changing string length causes problems with Matcher.
+     * @param match
+     * @return 
+     */
+    protected static String createReplaceTag(String match){
+        String rtag = "";
+        for(int i=0;i < match.length();i++){
+            rtag += "|";
+        }
+        return rtag;
     }
 }
