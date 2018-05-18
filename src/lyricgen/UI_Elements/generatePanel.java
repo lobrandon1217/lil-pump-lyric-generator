@@ -3,21 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lyricgen;
+package lyricgen.UI_Elements;
 
 import java.sql.*;
 import javax.swing.*;
 import javax.swing.table.*;
+import lyricgen.LyricGenerator;
+import lyricgen.mysqlStorage;
 
 /**
  *
  * @author Brandon
  */
 public class generatePanel extends javax.swing.JPanel {
-    /**
-     * Fields
-     */
-    MySQLHandler sqlHandler;
     
     /**
      * Creates new form generatePanel
@@ -44,13 +42,6 @@ public class generatePanel extends javax.swing.JPanel {
         //Remove the column from the jTable but not from the Table Model
         jTable1.removeColumn(jTable1.getColumnModel().getColumn(0)); //id
         jTable1.removeColumn(jTable1.getColumnModel().getColumn(0)); //lyrics index - 1
-        
-        //Attempt to connect to the sql server
-        /**try {
-            sqlHandler = new MySQLHandler();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "There was an error connecting to the SQL database.");
-        }**/
         
         try {
             //get all things from songs
@@ -183,7 +174,7 @@ public class generatePanel extends javax.swing.JPanel {
                      */
                     int id = Integer.valueOf((String) jTableModel.getValueAt(i, 0));
                     //get song lyrics from mysql
-                    ResultSet songLyrics = sqlHandler.executeQuery(String.format("SELECT lyrics FROM songs WHERE id = %s;", id));
+                    ResultSet songLyrics = mysqlStorage.sqlHandler.executeQuery(String.format("SELECT lyrics FROM songs WHERE id = %s;", id));
                     while(songLyrics.next()){
                         //Feed the lyrics into the songLyrics object
                         songFactory.insertString(songLyrics.getString("lyrics"));

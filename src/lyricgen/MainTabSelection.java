@@ -7,6 +7,7 @@ package lyricgen;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import lyricgen.UI_Elements.*;
 
 /**
  *
@@ -262,7 +263,22 @@ public class MainTabSelection extends javax.swing.JFrame {
         //clear the panel
         contentPanel.removeAll();
         //add the panel depending on what you have
-        contentPanel.add(new generatePanel());
+        switch( evt.getComponent().getName() ) {
+            case "community":
+                contentPanel.add(new Community());
+                break;
+            case "addSong":
+                contentPanel.add(new AddSongs());
+                break;
+            case "generation":
+                contentPanel.add(new generatePanel());
+                break;
+            case "profile":
+                contentPanel.add(new Profile());
+                break;
+            default:
+                break;
+        }
         //refresh the panel
         contentPanel.validate();
     }//GEN-LAST:event_changePanel
@@ -274,6 +290,8 @@ public class MainTabSelection extends javax.swing.JFrame {
     private void jFrameWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jFrameWindowOpened
         //Set the content panel to have borderlayout so that it fills the entire jPanel
         contentPanel.setLayout(new BorderLayout());
+        //make sql
+        mysqlStorage.sqlHandler = new MySQLHandler();
     }//GEN-LAST:event_jFrameWindowOpened
     
     /**
