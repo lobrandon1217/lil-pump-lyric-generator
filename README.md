@@ -32,11 +32,11 @@ e.g. `- [x] Finished Task - **JD**`
 - [ ] Technical Writeup
 ### User Interface (and submenus)
 - [x] Design new interface with sectioned panels - **BL**
-- [ ] Login and Register UI
-- [ ] Profile Page UI
-- [ ] Add Songs UI
+- [x] Login and Register UI - **NF**
+- [x] Profile Page UI - **NF**
+- [x] Add Songs UI - **NF**
 - [x] Generation UI - **BL**
-- [ ] Community UI
+- [x] Community UI - **NF**
 - [ ] Admin UI
 ### Song Generation
 - [x] Clear words inside [square brackets] - **BL**
@@ -46,10 +46,10 @@ e.g. `- [x] Finished Task - **JD**`
 - [ ] *User-defined probability weight? - **WW***
 - [ ] Polish Markov Chain (remove major bugs)
 - [ ] Split specified punctuation into individual words
-- [X] Clean up straggling punctuation marks **WW** *could use polishing
+- [X] Clean up straggling punctuation marks **WW*** could use polishing
 ### Social
-- [ ] *UI for login, register - **NF***
-- [ ] *Hashing, salting password - **NF***
+- [x] UI for login, register - **NF**
+- [x] Hashing, salting password - **NF**
 - [ ] Song publishing (generated songs)
 - [ ] Song submitting (submitting pre-existing lyrics)
 - [ ] Song ratings (like, dislike)
