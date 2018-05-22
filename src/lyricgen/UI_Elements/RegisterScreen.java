@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
-import lyricgen.CustomBCrypt;
+import lyricgen.BCrypt;
 import lyricgen.MainTabSelection;
 import lyricgen.MySQLHandler;
 import lyricgen.mysqlStorage;
@@ -196,7 +196,8 @@ public class RegisterScreen extends javax.swing.JFrame {
         
     public boolean CreateUser(String username, String password) {
         try {
-            mysqlStorage.sqlHandler.execute("INSERT INTO `users` (`username`, `password`) values ('" + username + "','" + CustomBCrypt.hashpw(password, CustomBCrypt.gensalt()) + "');");
+            String stringHashed = BCrypt.hashpw(password, BCrypt.gensalt());
+            mysqlStorage.sqlHandler.execute("INSERT INTO `users` (`username`, `password`) values ('" + username + "','" + stringHashed + "');");
             return true;
         } catch (Exception e) {
             return false;

@@ -290,6 +290,8 @@ public class MainTabSelection extends javax.swing.JFrame {
     private void jFrameWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jFrameWindowOpened
         //Set the content panel to have borderlayout so that it fills the entire jPanel
         contentPanel.setLayout(new BorderLayout());
+        // SET THE USERNAME TO THE LOG IN USER
+        usernameLabel.setText(mysqlStorage.getUsername());
     }//GEN-LAST:event_jFrameWindowOpened
     
     /**

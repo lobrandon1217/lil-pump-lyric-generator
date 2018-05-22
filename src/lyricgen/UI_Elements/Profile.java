@@ -5,6 +5,8 @@
  */
 package lyricgen.UI_Elements;
 
+import lyricgen.mysqlStorage;
+
 /**
  *
  * @author noah
@@ -16,6 +18,9 @@ public class Profile extends javax.swing.JPanel {
      */
     public Profile() {
         initComponents();
+        
+        // SET THE NAME TO YOUR USERNAME
+        jLabel5.setText(mysqlStorage.getUsername());
     }
 
     /**
@@ -34,6 +39,12 @@ public class Profile extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jButton2 = new javax.swing.JButton();
+
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                Profile.this.componentShown(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
         jLabel5.setText("BRANDON");
@@ -105,6 +116,11 @@ public class Profile extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void componentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_componentShown
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_componentShown
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

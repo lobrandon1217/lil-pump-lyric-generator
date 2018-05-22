@@ -3,14 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/brandonlo/Documents/GitHub/lil-pump-lyric-generator/src/lyricgen/UI_Elements/generatePanel.java</file>
-            <file>file:/Users/brandonlo/Documents/GitHub/lil-pump-lyric-generator/src/lyricgen/MainTabSelection.java</file>
-            <file>file:/Users/brandonlo/Documents/GitHub/lil-pump-lyric-generator/src/lyricgen/UI_Elements/Profile.java</file>
+            <file>file:/Users/brandonlo/Documents/GitHub/lil-pump-lyric-generator/src/lyricgen/mysqlStorage.java</file>
             <file>file:/Users/brandonlo/Documents/GitHub/lil-pump-lyric-generator/src/lyricgen/UI_Elements/RegisterScreen.java</file>
-            <file>file:/Users/brandonlo/Documents/GitHub/lil-pump-lyric-generator/src/lyricgen/UI_Elements/AddSongs.java</file>
-            <file>file:/Users/brandonlo/Documents/GitHub/lil-pump-lyric-generator/src/lyricgen/UI_Elements/Community.java</file>
-            <file>file:/Users/brandonlo/Documents/GitHub/lil-pump-lyric-generator/src/lyricgen/UI_Elements/submit_song.java</file>
             <file>file:/Users/brandonlo/Documents/GitHub/lil-pump-lyric-generator/src/lyricgen/UI_Elements/LoginScreen.java</file>
+            <file>file:/Users/brandonlo/Documents/GitHub/lil-pump-lyric-generator/src/lyricgen/CustomBCrypt.java</file>
         </group>
     </open-files>
 </project-private>

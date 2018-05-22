@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import lyricgen.CustomBCrypt;
+import lyricgen.BCrypt;
 import lyricgen.MainTabSelection;
 import lyricgen.MySQLHandler;
 import lyricgen.mysqlStorage;
@@ -173,12 +173,15 @@ public class LoginScreen extends javax.swing.JFrame {
         
         String username = jTextField1.getText(); // GET THE USERNAME
         String password = jPasswordField1.getText(); // GET THE PASSWORD
+        System.out.println(password);
         String hashedPass = ""; // INITIALIZE THE HASHED PASSWORD
+        boolean isAdmin = false;
         ResultSet hashedPassRS; // INITIALIZE THE RESULT SET
         try {
-            hashedPassRS = mysqlStorage.sqlHandler.executeQuery(String.format("SELECT `password` FROM `users` WHERE username='%s';", username));
+            hashedPassRS = mysqlStorage.sqlHandler.executeQuery(String.format("SELECT `password`, `is_admin` FROM `users` WHERE username='%s';", username));
             while(hashedPassRS.next()) {
                 hashedPass = hashedPassRS.getString("password"); // SET THE HASHEDPASS VARIABLE TO THE HASHED PASSWORD WE GOT 
+                isAdmin = hashedPassRS.getBoolean("is_admin");
                 System.out.println(hashedPass);
             }
         } catch (SQLException ex) {
@@ -188,8 +191,12 @@ public class LoginScreen extends javax.swing.JFrame {
         }
         
         // COMPARE THE PASSWORD AND HASHED PASSWORD
-        if( CustomBCrypt.checkpw(password, hashedPass) ) {
+        if( BCrypt.checkpw(password, hashedPass) ) {
             // MATCHES
+            // SET USERNAME
+            mysqlStorage.setUsername(username);
+            // SET ADMIN STATUS
+            mysqlStorage.setAdmin(isAdmin);
             // CREATE NEW PAGE
             MainTabSelection newPage = new MainTabSelection();
             // SHOW PAGE
