@@ -10,10 +10,36 @@ package lyricgen;
  */
 public class mysqlStorage {
     public static MySQLHandler sqlHandler;
+    private static String username;
+    private static boolean is_admin;
+    
+    // GETTER AND SETTERS
+    
     /**
-     * Initializes the sqlHandler object
+     * Sets the username
+     * @param username 
      */
-    static {
-        sqlHandler = new MySQLHandler();
+    public static void setUsername(String username) {
+        mysqlStorage.username = username;
+    }
+    
+    /**
+     * Gets the username
+     * @return Username as String
+     */
+    public static String getUsername() {
+        return username;
+    }
+    
+    /**
+     * Sets the User to is_admin as admin status
+     * @param is_admin boolean
+     */
+    public static void setAdmin(boolean is_admin) {
+        mysqlStorage.is_admin = is_admin;
+    }
+    
+    public static boolean getAdmin() {
+        return is_admin;
     }
 }

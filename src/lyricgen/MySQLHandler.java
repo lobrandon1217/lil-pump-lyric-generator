@@ -19,17 +19,13 @@ public class MySQLHandler {
     /**
      * Fields
      */
-    private static Connection sqlConnection;
+    private Connection sqlConnection;
     
     /**
-     * Constructor
-     * 
-     * Initializes the connection to SQL server
-     * Also connects the statement to the actual connection
-     * 
-     * @throws SQLException 
+     * Initializes the connection.
+     * Required to do anything.
      */
-    static {
+    public MySQLHandler() {
         try {
             sqlConnection = DriverManager.getConnection("jdbc:mysql://den1.mysql2.gear.host:3306/lyricgen","lyricgen","Ig83!_5JWCV6"); //Initialize the SQL Connection
             System.out.println("Successfully connected to the database.");
@@ -48,7 +44,7 @@ public class MySQLHandler {
      * @return a resultset containing whatever you get from the query inputted
      * @throws SQLException 
      */
-    public static ResultSet executeQuery(String query) throws SQLException {
+    public ResultSet executeQuery(String query) throws SQLException {
         Statement sqlStatement = sqlConnection.createStatement();
         return sqlStatement.executeQuery(query);
     }
@@ -61,7 +57,7 @@ public class MySQLHandler {
      * @param query what you want to execute
      * @throws SQLException 
      */
-    public static void execute(String query) throws SQLException {
+    public void execute(String query) throws SQLException {
         Statement sqlStatement = sqlConnection.createStatement();
         sqlStatement.execute(query);
     }
@@ -89,4 +85,5 @@ public class MySQLHandler {
         }
         return result;
     }
+
 }
