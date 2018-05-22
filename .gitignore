@@ -1,3 +1,5 @@
 /dist/
 nbproject/private/private.xml
 *.xml
+.DS_Store
+
