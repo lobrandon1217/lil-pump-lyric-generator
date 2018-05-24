@@ -31,13 +31,17 @@ public class LyricGenerator {
     public void insertString(String songLyric) {
         //Remove text inside square brackets because they are wrong usually when generated
         String songLyricReplaced = songLyric.trim().replaceAll("\\[(.*)]", "").replaceAll(" +", " ");
-        
+        songLyricReplaced = preClean(songLyricReplaced);
         //Split the song into individual words
         String[] words = songLyricReplaced.split(" ");
+        //ArrayList<String> wordtemp = new ArrayList<String>((Arrays.asList(words)));
+        //wordtemp.removeAll(Collections.singleton("")); 
+        //words = wordtemp.toArray(new String[wordtemp.size()]);
         //Loop through each word and add it to the specific hashtable location
         for(int i=0;i<words.length;i++) {
             //BEGINNING
             //Or the first letter is capitalized and not at the end
+            
             if(i==0 || (Character.isUpperCase(words[i].charAt(0)) && i != words.length-1)) {
                 ArrayList<String> beginArray = wordTable.get("--begin");
                 beginArray.add(words[i]);
@@ -110,6 +114,10 @@ public class LyricGenerator {
      * @return  song, cleaned
      */
 protected static String punctuationCleanUp(String song){
+        //fix independant/previously split punctuation
+        song = song.replace(" ,",",");
+        song = song.replace(" - ","-");
+        song = song.replace("  ", " ");
         Pattern pattern;
         Matcher matcher;
         int start;
@@ -117,45 +125,38 @@ protected static String punctuationCleanUp(String song){
         String match;
         /* 
         Yes, ive probably overcomplicated this.
-        parenthese and quote fixer. finds problems with regex, and
-        replaces them with 'tags' of the same length which are later replaced corrected string.
+        parenthese and quote fixer. finds problems using regex, and
+        replaces them with 'tags' of the same length which are later replaced with a corrected string.
         This is to avoid indexing errors that result from adding coprrections(whitch change the size of the song) durring matching.
         */
-        String pat = "(\\([A-Za-z0-9_!?'\"`.,]+)|([A-Za-z0-9_!?'\"`.,]+\\))|(\"[A-Za-z0-9_!?'\"`.,]+)|[A-Za-z0-9_!?'\"`.,]+\"";// looks for ...) , (... , ..." , and "...
+        String pat = "(\\(.*\\))|(\\([A-Za-z0-9_!?'\\\"`.,\\-]*)|([A-Za-z0-9_!?'\\\"`.,\\-]*\\))|(\".*\")|(\"[A-Za-z0-9_!?'\\\"`.,\\-]+)|[A-Za-z0-9_!?'\\\"`.,\\-]+\"";// looks for ...) , (... , ..." , and "...
         pattern = Pattern.compile(pat);
         matcher = pattern.matcher(song);
         ArrayList<String> corrections = new ArrayList<String>();
-        while(matcher.find()){
+        while(matcher.find()){ //for each match...
                 start = matcher.start();
                 end = matcher.end();
                 match = song.substring(start,end);
-                if(song.charAt(end) == ')' ) { // if match has a closing paren
-                    //System.out.println("(() match: " +match);
-                    corrections.add("("+match.replace("(",""));
+                
+          /*()*/if(match.charAt(0)=='(' && match.charAt(match.length()-1) == ')'){ //clear extra parens inside closed parens
+                    corrections.add('('+match.replaceAll("[()]","")+')');
                     song = song.substring(0,start) +createReplaceTag(match)+ song.substring(end);
-                }else if( song.charAt(start-1) == '('){ 
-                    //System.out.println("()) match: " +match);
-                    corrections.add(match);
+          /*(>*/}else if(match.charAt(0)=='('){  //close paren
+                    corrections.add(match+')');
                     song = song.substring(0,start) +createReplaceTag(match)+ song.substring(end);
-                }else if( song.charAt(start) == '('){
-                    //System.out.println("((( match: " +match);
-                    corrections.add(match+")");
+          /*<)*/}else if(match.charAt(match.length()-1) == ')'){ // remove closing paren
+                    corrections.add(match.replace(")",""));
                     song = song.substring(0,start) +createReplaceTag(match)+ song.substring(end);
-                }else if( song.charAt(end-1) == ')'){
-                    //System.out.println("))) match: " +match);
-                    corrections.add("("+match);
+          /*""*/}else if(match.charAt(0)=='"' && match.charAt(match.length()-1) == '"'){ //clear extra quotations inside closed quotes
+                    corrections.add('"'+match.replaceAll("\"","")+'"');
                     song = song.substring(0,start) +createReplaceTag(match)+ song.substring(end);
-                }else if(song.charAt(start) == '"' && song.charAt(end-1) == '"'){
-                     System.out.println("\"-\" match: " +match);
-                }else if( song.charAt(start) == '"'){
-                    //System.out.println("\"-> match: " +match);
+          /*">*/}else if(match.charAt(0)=='"'){  //close quote
                     corrections.add(match+'"');
                     song = song.substring(0,start) +createReplaceTag(match)+ song.substring(end);
-                }else if( song.charAt(end-1) == '"'){
-                    //System.out.println("<-\" match: " +match);
-                    corrections.add(" \""+match);
+          /*<"*/}else if(match.charAt(match.length()-1) == '"'){ // remove closing quote
+                    corrections.add(match.replace("\"",""));
                     song = song.substring(0,start) +createReplaceTag(match)+ song.substring(end);
-                }else System.out.println("??? match: " +match);
+                }else System.out.print("???: "+ match);             
         }
         for(String correction :corrections){ //replace tags with thier corrected matches.
             song = song.replaceFirst("\\|+", correction);
@@ -163,9 +164,13 @@ protected static String punctuationCleanUp(String song){
         song = song.replace("\" \"", " "); // join akward consecutive quotations
         song = song.replace(") ("," ");// join akward consecutive parenthesis
         song = song.replace(",)", ")");// clear ,) resulting from ( closing.
+        song = song.replace(", \"", " \""); // remove all correct coma-qoutation pairs so that incorrect can be fixed wwihtout dupes on correct
+        song = song.replace(" \"", ", \""); // turn lonley opening quotes into , "
+        //broken //song = song.replaceAll("\\w(\")",".\""); //add period to abrubtly ended wuote (wordcharecter imdiatley followed by quote).
         if(song.charAt(song.length()-1) == ','){
             song = song.substring(0,song.length()-1);
         }
+        song = song.replace("  ", " ");
         return song;
     }
     /**
@@ -181,4 +186,10 @@ protected static String punctuationCleanUp(String song){
         }
         return rtag;
     }
+    protected static String preClean(String song){
+    song = song.replace("-"," - ");
+    song = song.replace(","," ,");
+    song = song.replace("  ", " ");//remove doublespaces which split into and an empty string and break indexing
+    return song;
+  }
 }
