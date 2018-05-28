@@ -5,6 +5,14 @@
  */
 package lyricgen.UI_Elements;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import lyricgen.mysqlStorage;
+
 /**
  *
  * @author noah
@@ -16,6 +24,37 @@ public class AddSongs extends javax.swing.JPanel {
      */
     public AddSongs() {
         initComponents();
+        //set the model to a new blank model
+        //then add more columns
+        jTable1.setModel(new DefaultTableModel(){
+            //This makes it so that you CANNOT edit any of the cells, which we don't want
+            @Override
+            public boolean isCellEditable(int row, int column){  
+                return false;  
+            }
+        });
+        DefaultTableModel jTableModel = (DefaultTableModel) jTable1.getModel();
+        //add each column
+        jTableModel.addColumn("id");
+        jTableModel.addColumn("lyrics");
+        jTableModel.addColumn("Title");
+        jTableModel.addColumn("Artist");
+        jTableModel.addColumn("Submitted By");
+        
+        //Remove the column from the jTable but not from the Table Model
+        jTable1.removeColumn(jTable1.getColumnModel().getColumn(0)); //id
+        jTable1.removeColumn(jTable1.getColumnModel().getColumn(0)); //lyrics index - 1
+        
+        try {
+            //get all things from songs
+            ResultSet rsSongs = mysqlStorage.sqlHandler.executeQuery("SELECT * FROM songs;");
+            while( rsSongs.next() ) {
+                //Long string[], basically puts all of the rsSongs properties into the table in the right slots
+                jTableModel.addRow(new String[]{String.format("%s",rsSongs.getInt("id")), rsSongs.getString("lyrics"), rsSongs.getString("title"), rsSongs.getString("artist"), mysqlStorage.sqlHandler.getUserFromId(rsSongs.getInt("user_submitted_id")).get("username").toString()});
+            }
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -42,6 +81,7 @@ public class AddSongs extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(185, 207, 212));
         setPreferredSize(new java.awt.Dimension(800, 400));
 
         jTable1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -89,6 +129,11 @@ public class AddSongs extends javax.swing.JPanel {
         jScrollPane2.setViewportView(jTextArea1);
 
         jButton1.setText("Submit Song");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Clear Text");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -169,6 +214,20 @@ public class AddSongs extends javax.swing.JPanel {
         // RESET LYRICS TEXT
         jTextArea1.setText(""); // SET JTEXTAREA TO BLANK
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            // submit request for the song
+            //INSERT INTO `lyricgen`.`song_requests` (`title`, `artist`, `lyrics`) VALUES ('2112', '4214', '442141');
+            mysqlStorage.sqlHandler.execute(String.format("INSERT INTO song_requests (`title`, `artist`, `lyrics`, `user_submitted_id`) VALUES ('%s', '%s', '%s', '%s');", jTextField1.getText(), jTextField2.getText(), jTextArea1.getText(), mysqlStorage.getID()));
+            submit_song submitWindow = new submit_song();
+            submitWindow.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(AddSongs.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "There was an error submitting the song.");
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

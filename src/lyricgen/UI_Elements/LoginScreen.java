@@ -176,12 +176,14 @@ public class LoginScreen extends javax.swing.JFrame {
         System.out.println(password);
         String hashedPass = ""; // INITIALIZE THE HASHED PASSWORD
         boolean isAdmin = false;
+        int id = 0;
         ResultSet hashedPassRS; // INITIALIZE THE RESULT SET
         try {
-            hashedPassRS = mysqlStorage.sqlHandler.executeQuery(String.format("SELECT `password`, `is_admin` FROM `users` WHERE username='%s';", username));
+            hashedPassRS = mysqlStorage.sqlHandler.executeQuery(String.format("SELECT * FROM `users` WHERE username='%s';", username));
             while(hashedPassRS.next()) {
                 hashedPass = hashedPassRS.getString("password"); // SET THE HASHEDPASS VARIABLE TO THE HASHED PASSWORD WE GOT 
                 isAdmin = hashedPassRS.getBoolean("is_admin");
+                id = hashedPassRS.getInt("id");
                 System.out.println(hashedPass);
             }
         } catch (SQLException ex) {
@@ -191,12 +193,20 @@ public class LoginScreen extends javax.swing.JFrame {
         }
         
         // COMPARE THE PASSWORD AND HASHED PASSWORD
-        if( BCrypt.checkpw(password, hashedPass) ) {
+        boolean passwordCorrect = false;
+        try {
+            passwordCorrect = BCrypt.checkpw(password, hashedPass);
+        } catch ( StringIndexOutOfBoundsException e ) {
+            // nothing, password just incorrect
+        }
+        if( passwordCorrect ) {
             // MATCHES
             // SET USERNAME
             mysqlStorage.setUsername(username);
             // SET ADMIN STATUS
             mysqlStorage.setAdmin(isAdmin);
+            // set id
+            mysqlStorage.setID(id);
             // CREATE NEW PAGE
             MainTabSelection newPage = new MainTabSelection();
             // SHOW PAGE

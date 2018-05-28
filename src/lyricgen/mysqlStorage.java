@@ -12,6 +12,7 @@ public class mysqlStorage {
     public static MySQLHandler sqlHandler;
     private static String username;
     private static boolean is_admin;
+    private static int id;
     
     // GETTER AND SETTERS
     
@@ -41,5 +42,13 @@ public class mysqlStorage {
     
     public static boolean getAdmin() {
         return is_admin;
+    }
+    
+    public static void setID( int id ) {
+        mysqlStorage.id = id;
+    }
+    
+    public static int getID() {
+        return id;
     }
 }

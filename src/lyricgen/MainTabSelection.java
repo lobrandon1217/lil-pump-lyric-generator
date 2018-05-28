@@ -165,7 +165,7 @@ public class MainTabSelection extends javax.swing.JFrame {
         });
 
         profileLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        profileLabel.setText("Profile");
+        profileLabel.setText("Settings");
 
         javax.swing.GroupLayout profileButtonLayout = new javax.swing.GroupLayout(profileButton);
         profileButton.setLayout(profileButtonLayout);
@@ -292,6 +292,19 @@ public class MainTabSelection extends javax.swing.JFrame {
         contentPanel.setLayout(new BorderLayout());
         // SET THE USERNAME TO THE LOG IN USER
         usernameLabel.setText(mysqlStorage.getUsername());
+        // show generate
+        // set all buttons to the background color
+        communityButton.setBackground(Color.decode("#AFAAB9"));
+        // except for generate button
+        generationButton.setBackground(Color.decode("#B9CFD4"));
+        addSongButton.setBackground(Color.decode("#AFAAB9"));
+        profileButton.setBackground(Color.decode("#AFAAB9"));
+        // clear panel
+        contentPanel.removeAll();
+        // add panel
+        contentPanel.add(new generatePanel());
+        // refresh it
+        contentPanel.validate();
     }//GEN-LAST:event_jFrameWindowOpened
     
     /**

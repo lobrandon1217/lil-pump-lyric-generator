@@ -168,9 +168,9 @@ public class RegisterScreen extends javax.swing.JFrame {
             jPasswordField1.setEditable(false);
             jPasswordField2.setEditable(false);
             if( CreateUser(username, password) ) {
-                mysqlStorage.setUsername(username); // SET THE STORAGE TO THE USERNAME BECAUSE IT IS SUCCESSFUL
-                MainTabSelection newPage = new MainTabSelection(); // CREATE THE DASHBOARD PAGE
-                newPage.setVisible(true); // SHOW THE DASHBOARD PAGE
+                JOptionPane.showMessageDialog(null, "Account successfully created.");
+                LoginScreen newPage = new LoginScreen(); // CREATE THE login PAGE again
+                newPage.setVisible(true); // SHOW THE login PAGE
                 this.dispose(); // DELETE THIS PAGE
             } else {
                 JOptionPane.showMessageDialog(null, "There was an error creating your account.");

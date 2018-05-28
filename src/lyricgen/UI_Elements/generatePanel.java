@@ -184,7 +184,8 @@ public class generatePanel extends javax.swing.JPanel {
                 }
             }
             //Show the result
-            JOptionPane.showMessageDialog(null, songFactory.createLyrics(jSlider1.getValue()));
+            generatedSong finalWindow = new generatedSong(songFactory.createLyrics(jSlider1.getValue()));
+            finalWindow.setVisible(true);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
